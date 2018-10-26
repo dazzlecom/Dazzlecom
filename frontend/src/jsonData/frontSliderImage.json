@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "src":"../../assets/frontSliderimage1.jpg",
+        "alt":"firstImage"
+    },
+    {
+        "id":2,
+        "src":"../../assets/frontSliderimage2.jpg",
+        "alt":"secondImage"
+    },
+    {
+        "id":3,
+        "src":"../../assets/frontSliderimage3.jpg",
+        "alt":"thirdImage"
+    }
+]

@@ -1,45 +1,63 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Hello</router-link> |
-      <router-link to="/callservice">Service</router-link> |
-      <router-link to="/bootstrap">Bootstrap</router-link> |
-      <router-link to="/user">User</router-link>
-    </div>
-    <router-view :hellomsg="msg"></router-view>
-  </div>
+  <v-app>
+  <Toolbar></Toolbar>
+    <v-content style="padding-top:42px">
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
+import HelloWorld from './components/HelloWorld'
+import Toolbar from '@/components/global/Toolbar'
 
 export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to your Vue.js powered Spring Boot App'
+  name: 'App',
+  components: {
+    Toolbar
+  },
+   
+    data: () => ({
+      dialog: false,
+      drawer: true,
+      team: 'Philadelphia Eagles',
+      items: [
+        { icon: 'contacts', text: 'Team', 'route': 'Team' },
+        { icon: 'event', text: 'Schedule', 'route': 'Schedule' },
+        { icon: 'account_balance', text: 'Stadium', 'route': 'Stadium' },
+        { icon: 'account_box', text: 'Roster', 'route': 'Roster' },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'Labels',
+          model: true,
+          children: [
+            { icon: 'add', text: 'Create label' }
+          ]
+        },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'More',
+          model: false,
+          children: [
+            { text: 'Import' },
+            { text: 'Export' },
+            { text: 'Print' },
+            { text: 'Undo changes' },
+            { text: 'Other contacts' }
+          ]
+        },
+        { icon: 'settings', text: 'Settings' },
+        { icon: 'chat_bubble', text: 'Send feedback' },
+        { icon: 'help', text: 'Help' },
+        { icon: 'phonelink', text: 'App downloads' },
+        { icon: 'keyboard', text: 'Go to the old version' }
+      ]
+    }),
+    props: {
+      source: String
     }
   }
-}
+
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 20px;
-}
-
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-     color: #42b983;
-    }
-  }
-}
-</style>
