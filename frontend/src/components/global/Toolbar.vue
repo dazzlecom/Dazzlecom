@@ -2,13 +2,15 @@
 <div>
    <v-navigation-drawer
       fixed
-      clipped
+     v-if="sandwitch"
       app
       v-model="drawer"
     >
+    
       <v-list dense>
+       
           <v-expansion-panel>
-      
+       <h3>Catagories</h3>
     <v-expansion-panel-content
       v-for="(item,index) in items"
       :key="index"
@@ -96,7 +98,7 @@
 
     <v-toolbar class="navbar" app flat color="rgb(237, 237, 236)" scroll-off-screen :scroll-threshold="300">
  
-    <v-toolbar-side-icon  @click.stop="drawer = !drawer"
+    <v-toolbar-side-icon  v-if="sandwitch" @click.stop="drawer = !drawer"
           ></v-toolbar-side-icon>
     
   <ToggleSidebar :drawer="drawer"></ToggleSidebar>
@@ -104,13 +106,13 @@
       <img src="@/assets/dazzlecom.png" alt="">
     </v-toolbar-title>
     
-    <v-spacer></v-spacer>
-    
+    <v-spacer v-if="!sandwitch"></v-spacer>
+    <div v-if="!sandwitch">
     <v-btn flat target="_blank">
       <span class="mr-1">Home</span>
     </v-btn>
 
-      <v-menu transition="slide-x-transition"
+      <v-menu transition="slide-x-transition" 
       >
         <v-btn flat target="_blank" slot="activator">
       <span class="mr-1">Tables</span>
@@ -171,7 +173,7 @@
     <v-btn flat target="_blank">
       <span class="mr-1">Storage</span>
     </v-btn>
-
+</div>
       <v-btn  icon>
       <v-icon>search</v-icon>
     </v-btn>
@@ -183,6 +185,12 @@
     <v-btn icon>
       <v-icon>favorite</v-icon>
     </v-btn>
+    <!-- <v-btn  >
+      <div id="app">
+  <br> Window Width: {{ windowWidth }} <br/>
+  {{ txt }}
+</div>
+    </v-btn> -->
   </v-toolbar>
 </div>
 </template>
@@ -192,17 +200,17 @@ import ToggleSidebar from './ToggleSidebar'
     components:{
       ToggleSidebar,
     },
+   
     data: () => ({
+          sandwitch:false,
+          windowWidth:0,
           drawer: null,
+          txt:"",
           items: [
- 
         { icon: 'airline_seat_recline_extra',
-          text: 'Chair', 
+          text: 'Chair',
          'route': 'Stadium',
          children:[
-           {
-              text: 'Chair'
-            },
             {
               text: 'Lift chai'
             },
@@ -243,19 +251,109 @@ import ToggleSidebar from './ToggleSidebar'
               text: 'Bar chair'
             },
          ]
-        
         },
-        { icon: 'local_hotel', text: 'Bed', 'route': 'Roster' },
-        { icon: '', text: 'Tables', 'route': 'Schedule' },
+        { icon: 'local_hotel',
+          text: 'Bed',
+          'route': 'Roster',
+          children:[
+            {
+                text: 'Bunk bed'
+              },
+              {
+                text: 'Canopy bed'
+              },
+              {
+                text: 'Four-poster bed'
+              },
+              {
+                text: 'Murphy bed'
+              },
+              {
+                text: 'Platform bed'
+              },
+              {
+                text: 'Sleigh bed'
+              },
+              {
+                text: 'Waterbed'
+              },
+              {
+                text: 'Daybed'
+              }
+          ]
+        },
+        { icon: '',
+         text: 'Tables',
+          'route': 'Schedule',
+          children:[
+            {
+              text: 'Lowboy'
+            },
+            {
+              text: 'Coffee Table'
+            },
+            {
+              text: 'Folding Table'
+            },
+            {
+              text: 'Tv Tray Table'
+            },
+            {
+              text: 'Wine Table'
+            },
+            {
+              text: 'End Table'
+            },
+            {
+              text: 'Poker Table'
+            }
+          ],
+          singleseats: [{
+              title: 'Chair'
+            },
+            {
+              title: 'Lift chai'
+            },
+            {
+              title: 'Bean bag'
+            },
+            {
+              title: 'Chaise longue'
+            },
+            {
+              title: 'Fauteuil'
+            },
+            {
+              title: 'Ottoman'
+            },
+            {
+              title: 'ecline'
+            },
+            {
+              title: 'Stool'
+            },
+            {
+              title: 'Bar Stool'
+            },
+            {
+              title: 'Footstool or ottoman'
+            },
+            {
+              title: 'Tuffet'
+            },
+            {
+              title: 'Fainting couch'
+            },
+            {
+              title: 'Rocking chair'
+            },
+            {
+              title: 'Bar chair'
+            },
+          ]
+         },
  
-      ],
-      menues:[
-       {
-         icon:'home',
-         text:"Home"
-       }
-      ],
-          tables: [{
+      ],tables: [{
               title: 'Lowboy'
             },
             {
@@ -320,7 +418,6 @@ import ToggleSidebar from './ToggleSidebar'
               title: 'Bar chair'
             },
           ],
-
           bed: [
              {
                 title: 'Bunk bed'
@@ -358,9 +455,29 @@ import ToggleSidebar from './ToggleSidebar'
               }, {
                 title: 'Sofa bed'
               }
-
       ]
+    }),
+     watch: {
+    windowWidth(newWidth, oldWidth) {
+     this.txt = `it changed to ${newWidth} from ${oldWidth}`;
+     if(newWidth<1000){
+          this.sandwitch=true
+        }
+        if(newWidth>1000){
+          this.sandwitch=false
+        }
+    return  console.log(this.txt);
+    }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', () => {
+        this.windowWidth= window.innerWidth
+        
+      });
     })
+  },
   }
 </script>
 <style>

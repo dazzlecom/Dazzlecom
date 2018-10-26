@@ -54,6 +54,7 @@ export default {
       imgList :imgList
     }
   },
+  
   methods: {
     go(data){
       console.log(data)
